@@ -157,6 +157,8 @@ __meta__ = {
 }
 
 [node name="Area2D" type="Area2D" parent="ColorRect4"]
+audio_bus_override = true
+audio_bus_name = "New Bus1"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ColorRect4/Area2D"]
 position = Vector2( 156.275, 128.606 )
