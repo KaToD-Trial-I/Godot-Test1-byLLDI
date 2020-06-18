@@ -172,7 +172,6 @@ playing = true
 position = Vector2( 942.051, 34.452 )
 scale = Vector2( 3.13864, 2.54286 )
 frames = SubResource( 18 )
-frame = 11
 playing = true
 
 [node name="Sprite" type="Sprite" parent="."]
@@ -181,12 +180,14 @@ scale = Vector2( 3.15421, 3.21918 )
 texture = ExtResource( 2 )
 vframes = 4
 hframes = 4
-frame = 12
+frame = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite"]
+autoplay = "Новая анимация"
 "anims/Новая анимация" = SubResource( 19 )
 
 [node name="TileMap" type="TileMap" parent="."]
+visible = false
 tile_set = SubResource( 21 )
 cell_size = Vector2( 32, 32 )
 format = 1

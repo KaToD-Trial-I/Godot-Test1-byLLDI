@@ -110,12 +110,14 @@ texture_scale = 45.42
 color = Color( 1, 1, 1, 0 )
 mode = 2
 shadow_enabled = true
-shadow_color = Color( 0, 0, 0, 0.588235 )
+shadow_color = Color( 0, 0, 0, 0.827451 )
 shadow_buffer_size = 4096
 script = SubResource( 2 )
 
 [node name="Particles2D" type="CPUParticles2D" parent="Player"]
 light_mask = 0
+z_index = 1
+z_as_relative = false
 amount = 1024
 lifetime = 3.0
 local_coords = false
