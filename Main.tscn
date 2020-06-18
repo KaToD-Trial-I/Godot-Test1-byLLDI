@@ -1,9 +1,11 @@
-[gd_scene load_steps=30 format=2]
+[gd_scene load_steps=33 format=2]
 
 [ext_resource path="res://Node2D.tscn" type="PackedScene" id=1]
 [ext_resource path="res://icon.png" type="Texture" id=2]
 [ext_resource path="res://Main.gd" type="Script" id=3]
+[ext_resource path="res://Spatial.tscn" type="PackedScene" id=4]
 [ext_resource path="res://HID.tscn" type="PackedScene" id=5]
+[ext_resource path="res://PhysicScene.tscn" type="PackedScene" id=6]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -198,6 +200,26 @@ func _on_SaveButton_pressed():
 #	pass
 "
 
+[sub_resource type="GDScript" id=26]
+script/source = "extends ViewportContainer
+
+
+# Declare member variables here. Examples:
+# var a = 2
+# var b = \"text\"
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+#	rect_scale = Vector2(rect_size.x/1024,rect_size.y/600)
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+#func _process(delta):
+#	pass
+"
+
 [node name="Node2D" type="Node2D"]
 script = ExtResource( 3 )
 
@@ -209,14 +231,13 @@ script = ExtResource( 3 )
 position = Vector2( 880.66, 36.0528 )
 scale = Vector2( 0.710841, 0.768673 )
 frames = SubResource( 1 )
-frame = 3
 playing = true
 
 [node name="AnimatedSprite2" type="AnimatedSprite" parent="."]
 position = Vector2( 942.051, 34.452 )
 scale = Vector2( 3.13864, 2.54286 )
 frames = SubResource( 18 )
-frame = 12
+frame = 9
 playing = true
 
 [node name="Sprite" type="Sprite" parent="."]
@@ -241,3 +262,41 @@ tile_data = PoolIntArray( 65549, 0, 65536, 131084, 0, 65536, 131085, 0, 65536, 1
 autoplay = true
 bus = "New Bus"
 script = SubResource( 25 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ViewportContainer" type="ViewportContainer" parent="CanvasLayer"]
+margin_left = 14.3711
+margin_top = 65.4019
+margin_right = 186.371
+margin_bottom = 167.402
+stretch = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Viewport" type="Viewport" parent="CanvasLayer/ViewportContainer"]
+size = Vector2( 172, 102 )
+handle_input_locally = false
+render_target_update_mode = 3
+
+[node name="Spatial" parent="CanvasLayer/ViewportContainer/Viewport" instance=ExtResource( 4 )]
+
+[node name="ViewportContainer2" type="ViewportContainer" parent="CanvasLayer"]
+margin_left = 214.0
+margin_top = 28.0
+margin_right = 428.0
+margin_bottom = 166.0
+rect_scale = Vector2( 0.209, 0.209 )
+script = SubResource( 26 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Viewport" type="Viewport" parent="CanvasLayer/ViewportContainer2"]
+size = Vector2( 1024, 600 )
+handle_input_locally = false
+usage = 0
+render_target_update_mode = 3
+
+[node name="PhysicScene" parent="CanvasLayer/ViewportContainer2/Viewport" instance=ExtResource( 6 )]

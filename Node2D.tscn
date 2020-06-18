@@ -143,7 +143,6 @@ hue_variation_random = 1.0
 stream = ExtResource( 4 )
 volume_db = -30.0
 autoplay = true
-attenuation = 1.0
 
 [node name="ColorRect4" type="ColorRect" parent="."]
 material = SubResource( 4 )

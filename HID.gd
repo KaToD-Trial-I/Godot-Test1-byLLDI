@@ -20,5 +20,5 @@ func _on_Button_pressed():
 	get_node("/root/Node2D/AudioStreamPlayer")._on_RecordButton_pressed()
 	get_node("/root/Node2D/AudioStreamPlayer")._on_PlayButton_pressed()
 	print('hhh')
-#	get_tree().quit()
+	get_tree().quit()
 	pass # Replace with function body.

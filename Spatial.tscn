@@ -1,28 +1,235 @@
-[gd_scene load_steps=10 format=2]
-
-[ext_resource path="res://Main.tres" type="Shader" id=1]
+[gd_scene load_steps=22 format=2]
 
 [sub_resource type="PhysicsMaterial" id=1]
 
 [sub_resource type="SphereMesh" id=2]
 
-[sub_resource type="ShaderMaterial" id=3]
-shader = ExtResource( 1 )
+[sub_resource type="OpenSimplexNoise" id=12]
 
-[sub_resource type="SphereShape" id=4]
+[sub_resource type="NoiseTexture" id=13]
+seamless = true
+noise = SubResource( 12 )
 
-[sub_resource type="PlaneMesh" id=5]
+[sub_resource type="VisualShaderNodeTexture" id=3]
+output_port_for_preview = 0
+texture = SubResource( 13 )
 
-[sub_resource type="SpatialMaterial" id=6]
+[sub_resource type="VisualShaderNodeInput" id=4]
+input_name = "uv"
+
+[sub_resource type="VisualShaderNodeVectorOp" id=5]
+
+[sub_resource type="VisualShaderNodeInput" id=6]
+input_name = "time"
+
+[sub_resource type="VisualShaderNodeScalarOp" id=7]
+
+[sub_resource type="VisualShaderNodeExpression" id=8]
+size = Vector2( 338, 312 )
+expression = "output0 = sin(TIME)*0.5-0.5;
+output1 = 1.0;
+if(output0+input0 < 0.0){
+output1 = 0.0;
+}
+output1 = output0+input0;"
+
+[sub_resource type="VisualShaderNodeVectorOp" id=9]
+default_input_values = [ 0, Vector3( 0, 0, 0 ), 1, Vector3( 1, 1, 1 ) ]
+operator = 2
+
+[sub_resource type="NoiseTexture" id=10]
+
+[sub_resource type="VisualShaderNodeTexture" id=11]
+texture = SubResource( 10 )
+texture_type = 1
+
+[sub_resource type="VisualShader" id=14]
+code = "shader_type spatial;
+uniform sampler2D tex_frg_2;
+
+
+
+void vertex() {
+// Output:0
+
+}
+
+void fragment() {
+// Input:3
+	vec3 n_out3p0 = vec3(UV, 0.0);
+
+// Input:5
+	float n_out5p0 = TIME;
+
+// VectorOp:4
+	vec3 n_out4p0 = n_out3p0 + vec3(n_out5p0);
+
+// VectorOp:9
+	vec3 n_in9p1 = vec3(1.00000, 1.00000, 1.00000);
+	vec3 n_out9p0 = n_out4p0 * n_in9p1;
+
+// Texture:2
+	vec4 tex_frg_2_read = texture(tex_frg_2, n_out9p0.xy);
+	vec3 n_out2p0 = tex_frg_2_read.rgb;
+	float n_out2p1 = tex_frg_2_read.a;
+
+// Expression:8
+	float n_out8p0;
+	float n_out8p1;
+	n_out8p0 = 0.0;
+	n_out8p1 = 0.0;
+	{
+		n_out8p0 = sin(TIME)*0.5-0.5;
+		n_out8p1 = 1.0;
+		if(n_out8p0+dot(n_out2p0, vec3(0.333333, 0.333333, 0.333333)) < 0.0){
+		n_out8p1 = 0.0;
+		}
+		n_out8p1 = n_out8p0+dot(n_out2p0, vec3(0.333333, 0.333333, 0.333333));
+	}
+
+// Output:0
+	ALBEDO = vec3(n_out8p1);
+	ALPHA = n_out8p1;
+
+}
+
+void light() {
+// Output:0
+
+}
+"
+graph_offset = Vector2( 444, -80 )
+nodes/vertex/0/position = Vector2( 380, 40 )
+nodes/vertex/2/node = SubResource( 11 )
+nodes/vertex/2/position = Vector2( 140, 100 )
+nodes/fragment/0/position = Vector2( 940, -40 )
+nodes/fragment/2/node = SubResource( 3 )
+nodes/fragment/2/position = Vector2( 260, -220 )
+nodes/fragment/3/node = SubResource( 4 )
+nodes/fragment/3/position = Vector2( -340, -120 )
+nodes/fragment/4/node = SubResource( 5 )
+nodes/fragment/4/position = Vector2( -120, -140 )
+nodes/fragment/5/node = SubResource( 6 )
+nodes/fragment/5/position = Vector2( -280, -20 )
+nodes/fragment/6/node = SubResource( 7 )
+nodes/fragment/6/position = Vector2( 680, -60 )
+nodes/fragment/8/node = SubResource( 8 )
+nodes/fragment/8/position = Vector2( 340, 80 )
+nodes/fragment/8/size = Vector2( 338, 312 )
+nodes/fragment/8/input_ports = "0,0,input0;"
+nodes/fragment/8/output_ports = "0,0,output0;1,0,output1;"
+nodes/fragment/8/expression = "output0 = sin(TIME)*0.5-0.5;
+output1 = 1.0;
+if(output0+input0 < 0.0){
+output1 = 0.0;
+}
+output1 = output0+input0;"
+nodes/fragment/9/node = SubResource( 9 )
+nodes/fragment/9/position = Vector2( 60, -140 )
+nodes/fragment/connections = PoolIntArray( 2, 0, 6, 0, 2, 0, 8, 0, 8, 0, 6, 1, 4, 0, 9, 0, 9, 0, 2, 0, 2, 0, 6, 0, 2, 0, 8, 0, 8, 0, 6, 1, 4, 0, 9, 0, 9, 0, 2, 0, 2, 0, 6, 0, 2, 0, 8, 0, 8, 0, 6, 1, 4, 0, 9, 0, 9, 0, 2, 0, 2, 0, 6, 0, 2, 0, 8, 0, 8, 0, 6, 1, 4, 0, 9, 0, 9, 0, 2, 0, 2, 0, 6, 0, 2, 0, 8, 0, 8, 0, 6, 1, 4, 0, 9, 0, 9, 0, 2, 0, 2, 0, 6, 0, 2, 0, 8, 0, 8, 0, 6, 1, 4, 0, 9, 0, 9, 0, 2, 0, 3, 0, 4, 0, 5, 0, 4, 1, 8, 1, 0, 1, 8, 1, 0, 0 )
+
+[sub_resource type="ShaderMaterial" id=15]
+shader = SubResource( 14 )
+
+[sub_resource type="SphereShape" id=16]
+
+[sub_resource type="PlaneMesh" id=17]
+
+[sub_resource type="SpatialMaterial" id=18]
 albedo_color = Color( 0.439216, 0.494118, 0.760784, 1 )
 metallic = 0.45
 metallic_specular = 0.47
 roughness = 0.52
 
-[sub_resource type="BoxShape" id=7]
+[sub_resource type="BoxShape" id=19]
 
-[sub_resource type="ShaderMaterial" id=8]
-shader = ExtResource( 1 )
+[sub_resource type="VisualShader" id=20]
+code = "shader_type spatial;
+uniform sampler2D tex_frg_2;
+
+
+
+void vertex() {
+// Output:0
+
+}
+
+void fragment() {
+// Input:3
+	vec3 n_out3p0 = vec3(UV, 0.0);
+
+// Input:5
+	float n_out5p0 = TIME;
+
+// VectorOp:4
+	vec3 n_out4p0 = n_out3p0 + vec3(n_out5p0);
+
+// VectorOp:9
+	vec3 n_in9p1 = vec3(1.00000, 1.00000, 1.00000);
+	vec3 n_out9p0 = n_out4p0 * n_in9p1;
+
+// Texture:2
+	vec4 tex_frg_2_read = texture(tex_frg_2, n_out9p0.xy);
+	vec3 n_out2p0 = tex_frg_2_read.rgb;
+	float n_out2p1 = tex_frg_2_read.a;
+
+// Expression:8
+	float n_out8p0;
+	float n_out8p1;
+	n_out8p0 = 0.0;
+	n_out8p1 = 0.0;
+	{
+		n_out8p0 = sin(TIME)*0.5-0.5;
+		n_out8p1 = 1.0;
+		if(n_out8p0+dot(n_out2p0, vec3(0.333333, 0.333333, 0.333333)) < 0.0){
+		n_out8p1 = 0.0;
+		}
+		n_out8p1 = n_out8p0+dot(n_out2p0, vec3(0.333333, 0.333333, 0.333333));
+	}
+
+// Output:0
+	ALBEDO = vec3(n_out8p1);
+	ALPHA = n_out8p1;
+
+}
+
+void light() {
+// Output:0
+
+}
+"
+graph_offset = Vector2( -553, -204 )
+nodes/vertex/0/position = Vector2( 380, 40 )
+nodes/vertex/2/node = SubResource( 11 )
+nodes/vertex/2/position = Vector2( 140, 100 )
+nodes/fragment/0/position = Vector2( 940, -40 )
+nodes/fragment/2/node = SubResource( 3 )
+nodes/fragment/2/position = Vector2( 260, -220 )
+nodes/fragment/3/node = SubResource( 4 )
+nodes/fragment/3/position = Vector2( -340, -120 )
+nodes/fragment/4/node = SubResource( 5 )
+nodes/fragment/4/position = Vector2( -120, -140 )
+nodes/fragment/5/node = SubResource( 6 )
+nodes/fragment/5/position = Vector2( -280, -20 )
+nodes/fragment/6/node = SubResource( 7 )
+nodes/fragment/6/position = Vector2( 680, -60 )
+nodes/fragment/8/node = SubResource( 8 )
+nodes/fragment/8/position = Vector2( 340, 80 )
+nodes/fragment/8/size = Vector2( 338, 312 )
+nodes/fragment/8/input_ports = "0,0,input0;"
+nodes/fragment/8/output_ports = "0,0,output0;1,0,output1;"
+nodes/fragment/8/expression = "output0 = sin(TIME)*0.5-0.5;
+output1 = 1.0;
+if(output0+input0 < 0.0){
+output1 = 0.0;
+}
+output1 = output0+input0;"
+nodes/fragment/9/node = SubResource( 9 )
+nodes/fragment/9/position = Vector2( 60, -140 )
+nodes/fragment/connections = PoolIntArray( 2, 0, 6, 0, 2, 0, 8, 0, 8, 0, 6, 1, 4, 0, 9, 0, 9, 0, 2, 0, 2, 0, 6, 0, 2, 0, 8, 0, 8, 0, 6, 1, 4, 0, 9, 0, 9, 0, 2, 0, 2, 0, 6, 0, 2, 0, 8, 0, 8, 0, 6, 1, 4, 0, 9, 0, 9, 0, 2, 0, 2, 0, 6, 0, 2, 0, 8, 0, 8, 0, 6, 1, 4, 0, 9, 0, 9, 0, 2, 0, 2, 0, 6, 0, 2, 0, 8, 0, 8, 0, 6, 1, 4, 0, 9, 0, 9, 0, 2, 0, 2, 0, 6, 0, 2, 0, 8, 0, 8, 0, 6, 1, 4, 0, 9, 0, 9, 0, 2, 0, 8, 1, 0, 0, 8, 1, 0, 1, 3, 0, 4, 0, 5, 0, 4, 1 )
+
+[sub_resource type="ShaderMaterial" id=21]
+shader = SubResource( 20 )
 
 [node name="Spatial" type="Spatial"]
 
@@ -32,41 +239,36 @@ physics_material_override = SubResource( 1 )
 
 [node name="CSGMesh" type="CSGMesh" parent="RigidBody"]
 mesh = SubResource( 2 )
-material = SubResource( 3 )
+material = SubResource( 15 )
 
 [node name="CollisionShape" type="CollisionShape" parent="RigidBody"]
-shape = SubResource( 4 )
+shape = SubResource( 16 )
 
 [node name="Camera" type="Camera" parent="."]
 transform = Transform( 0.861266, 0.252201, -0.441153, 0, 0.868147, 0.496307, 0.508155, -0.427453, 0.747705, -7.69061, 3.31528, 7.20487 )
+current = true
 
 [node name="CSGMesh2" type="CSGMesh" parent="."]
 transform = Transform( 6.6684, -0.55, 2.40413e-08, 0, -3.36578e-07, -7.7, 3.85, 0.952628, -4.16407e-08, 1, 0, -3 )
-mesh = SubResource( 5 )
-material = SubResource( 6 )
+mesh = SubResource( 17 )
+material = SubResource( 18 )
 
 [node name="CSGMesh4" type="CSGMesh" parent="."]
 transform = Transform( 7.69541, -0.0379673, 1.6596e-09, 0.265738, 1.09921, 0.121351, -0.0041885, -0.0173251, 7.69904, -1.41009, -2.86228, 1.06856 )
-mesh = SubResource( 5 )
-material = SubResource( 6 )
+mesh = SubResource( 17 )
+material = SubResource( 18 )
 
 [node name="StaticBody" type="StaticBody" parent="CSGMesh4"]
 
 [node name="CollisionShape" type="CollisionShape" parent="CSGMesh4/StaticBody"]
 transform = Transform( 1, -7.66249e-10, 1.16415e-10, -3.83079e-09, 1, 0, -1.16415e-10, -4.65661e-10, 1, -0.00448199, -0.908437, -0.00204669 )
-shape = SubResource( 7 )
+shape = SubResource( 19 )
 
 [node name="CollisionShape2" type="CollisionShape" parent="CSGMesh4/StaticBody"]
 transform = Transform( 0.71098, 0.0520289, -0.601549, -3.08529, 0.897346, 0.156487, 0.547942, 0.0356061, 0.798521, -0.904362, 1.56522, -0.165242 )
-shape = SubResource( 7 )
+shape = SubResource( 19 )
 
 [node name="CSGMesh3" type="CSGMesh" parent="."]
-transform = Transform( 3.5017, -0.225814, 1.64742, -0.0529217, -0.426558, -2.21766, 2.42152, 0.315294, -2.44079, 1.05897, 0, -1.69423 )
-mesh = SubResource( 5 )
-material = SubResource( 8 )
-
-[node name="ARVROrigin" type="ARVROrigin" parent="."]
-transform = Transform( 0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, -8, 0, 9 )
-
-[node name="ARVRCamera" type="ARVRCamera" parent="ARVROrigin"]
-current = true
+transform = Transform( 3.5017, -0.225814, 1.64742, -0.0529217, -0.426558, -2.21766, 2.42152, 0.315294, -2.44079, 3.7471, 2.21603, -1.53458 )
+mesh = SubResource( 17 )
+material = SubResource( 21 )

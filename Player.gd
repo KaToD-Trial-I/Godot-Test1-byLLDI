@@ -22,18 +22,22 @@ func _input(event):
 	elif event is InputEventMouseButton:
 		if event.button_index == BUTTON_LEFT and event.pressed:
 			bufPos = event.position
-			newPos = bufPos
+			self.newPos = bufPos
 			$"../ColorRect".rect_position = newPos
 		
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 var velocityV = Vector2(0,0)
 func _process(delta):
-	velocityV = (((newPos - position)*velocity*delta) - velocityV)*delta
 #	position += velocityV#(newPos - position)*velocity*delta
-	look_at(bufPos)
-	position += velocityV*100
-	position += position.direction_to(newPos)*delta
+	velocityV = velocityV.linear_interpolate(position.direction_to(newPos).normalized(),0.5*delta)
+	position += velocityV*1000*delta;
+	
+#	velocityV = (((newPos - position)*velocity*delta) - velocityV)*delta
+#	look_at(bufPos)
+#	position += velocityV*100
+
+#	position += position.direction_to(newPos)*delta*100
 	
 	pass
 
