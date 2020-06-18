@@ -1,2 +1,2 @@
-# Godot-Test1-byLLDI
-Godot lerning project
+# Godot_KidsCanCode_Test1
+Godot project for learning this Game Engine
