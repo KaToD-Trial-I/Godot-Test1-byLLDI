@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/guitarix Test 100620201.ogg-b7bc12a4f93315d46a7495ed7685517b.oggstr"
+
+[deps]
+
+source_file="res://guitarix Test 100620201.ogg"
+dest_files=[ "res://.import/guitarix Test 100620201.ogg-b7bc12a4f93315d46a7495ed7685517b.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -19,6 +19,10 @@ config/name="KidsCanCode"
 run/main_scene="res://Main.tscn"
 config/icon="res://icon.png"
 
+[audio]
+
+enable_audio_input=true
+
 [autoload]
 
 UserData="*res://addons/github-integration/scripts/user_data.gd"

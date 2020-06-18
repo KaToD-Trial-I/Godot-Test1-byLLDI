@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=2]
+[gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://Node2D.tscn" type="PackedScene" id=1]
 [ext_resource path="res://icon.png" type="Texture" id=2]
@@ -119,19 +119,19 @@ tracks/0/keys = {
 "values": [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 15 ]
 }
 
+[sub_resource type="OccluderPolygon2D" id=20]
+polygon = PoolVector2Array( 32, 32, 0, 32, 0, 0, 32, 0 )
+
+[sub_resource type="OccluderPolygon2D" id=21]
+polygon = PoolVector2Array( 32, 32, 0, 32, 0, 0, 32, 0 )
+
 [sub_resource type="OccluderPolygon2D" id=22]
 polygon = PoolVector2Array( 32, 32, 0, 32, 0, 0, 32, 0 )
 
 [sub_resource type="OccluderPolygon2D" id=23]
 polygon = PoolVector2Array( 32, 32, 0, 32, 0, 0, 32, 0 )
 
-[sub_resource type="OccluderPolygon2D" id=24]
-polygon = PoolVector2Array( 32, 32, 0, 32, 0, 0, 32, 0 )
-
-[sub_resource type="OccluderPolygon2D" id=25]
-polygon = PoolVector2Array( 32, 32, 0, 32, 0, 0, 32, 0 )
-
-[sub_resource type="TileSet" id=21]
+[sub_resource type="TileSet" id=24]
 0/name = "icon.png 0"
 0/texture = ExtResource( 2 )
 0/tex_offset = Vector2( 0, 0 )
@@ -141,7 +141,7 @@ polygon = PoolVector2Array( 32, 32, 0, 32, 0, 0, 32, 0 )
 0/autotile/icon_coordinate = Vector2( 0, 0 )
 0/autotile/tile_size = Vector2( 32, 32 )
 0/autotile/spacing = 0
-0/autotile/occluder_map = [ Vector2( 0, 0 ), SubResource( 22 ), Vector2( 0, 1 ), SubResource( 23 ), Vector2( 1, 0 ), SubResource( 24 ), Vector2( 1, 1 ), SubResource( 25 ) ]
+0/autotile/occluder_map = [ Vector2( 0, 0 ), SubResource( 20 ), Vector2( 0, 1 ), SubResource( 21 ), Vector2( 1, 0 ), SubResource( 22 ), Vector2( 1, 1 ), SubResource( 23 ) ]
 0/autotile/navpoly_map = [  ]
 0/autotile/priority_map = [  ]
 0/autotile/z_index_map = [  ]
@@ -153,6 +153,50 @@ polygon = PoolVector2Array( 32, 32, 0, 32, 0, 0, 32, 0 )
 0/shape_one_way_margin = 0.0
 0/shapes = [  ]
 0/z_index = 0
+
+[sub_resource type="GDScript" id=25]
+script/source = "extends AudioStreamPlayer
+
+
+# Declare member variables here. Examples:
+# var a = 2
+# var b = \"text\"
+
+var effect
+var rec
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	effect = AudioServer.get_bus_effect(AudioServer.get_bus_index(\"New Bus\"),0)
+	
+#	_on_RecordButton_pressed()
+	effect.set_recording_active(true)
+	pass # Replace with function body.
+func _on_RecordButton_pressed():
+	if effect.is_recording_active():
+		rec = effect.get_recording()
+		effect.set_recording_active(false)
+	else:
+		effect.set_recording_active(true)
+
+func _on_PlayButton_pressed():
+	print(rec)
+	print(rec.format)
+	print(rec.mix_rate)
+	print(rec.stereo)
+	var data = rec.get_data()
+	print(data)
+	print(data.size())
+	print('JJJ')
+
+func _on_SaveButton_pressed():
+	var save_path = \"rec.waw\"
+	rec.save_to_wav(save_path)
+#    $Status.text = \"Saved WAV file to: %s\\n(%s)\" % [save_path, ProjectSettings.globalize_path(save_path)]
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+#func _process(delta):
+#	pass
+"
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource( 3 )
@@ -172,6 +216,7 @@ playing = true
 position = Vector2( 942.051, 34.452 )
 scale = Vector2( 3.13864, 2.54286 )
 frames = SubResource( 18 )
+frame = 12
 playing = true
 
 [node name="Sprite" type="Sprite" parent="."]
@@ -187,8 +232,12 @@ autoplay = "Новая анимация"
 "anims/Новая анимация" = SubResource( 19 )
 
 [node name="TileMap" type="TileMap" parent="."]
-visible = false
-tile_set = SubResource( 21 )
+tile_set = SubResource( 24 )
 cell_size = Vector2( 32, 32 )
 format = 1
 tile_data = PoolIntArray( 65549, 0, 65536, 131084, 0, 65536, 131085, 0, 65536, 131096, 0, 65536, 131097, 0, 65536, 131098, 0, 65536, 131099, 0, 65536, 196618, 0, 65536, 196619, 0, 65536, 196620, 0, 65536, 196635, 0, 65536, 262154, 0, 65536, 262171, 0, 65536, 393243, 0, 0, 458758, 0, 65536, 458779, -1073741824, 0, 458780, 0, 1, 524290, 0, 65536, 524315, 0, 0, 524316, 0, 65537, 589851, 0, 65536, 720920, 0, 65536, 720921, 0, 65536, 786456, 0, 65536, 786457, 0, 65536, 786458, 0, 65536, 851991, 0, 65536, 851992, 0, 65536, 851994, 0, 65536, 851995, 0, 65536, 851996, 0, 65536 )
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+autoplay = true
+bus = "New Bus"
+script = SubResource( 25 )
