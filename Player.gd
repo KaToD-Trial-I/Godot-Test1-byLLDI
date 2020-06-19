@@ -3,6 +3,7 @@ export var velocity = 1.0
 export var colorOn = Color(1,1,1)
 export var colorOff = Color(0,0,0)
 
+signal updatePos(pos)
 #export var colorOff = color(0,0,0)
 
 # Declare member variables here. Examples:
@@ -32,6 +33,7 @@ func _process(delta):
 #	position += velocityV#(newPos - position)*velocity*delta
 	velocityV = velocityV.linear_interpolate(position.direction_to(newPos).normalized(),0.5*delta)
 	position += velocityV*1000*delta;
+	emit_signal("updatePos",position)
 	
 #	velocityV = (((newPos - position)*velocity*delta) - velocityV)*delta
 #	look_at(bufPos)

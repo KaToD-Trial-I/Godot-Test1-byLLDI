@@ -1,0 +1,92 @@
+[gd_scene load_steps=4 format=2]
+
+[sub_resource type="Curve2D" id=1]
+bake_interval = 1.0
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, -142.279, -20.5958, -54.4149, 12.2434, 54.4149, -12.2434, -45.6927, -104.939, -58.4961, 2.72075, 58.4961, -2.72075, 48.173, -55.9655, -40.8112, -21.766, 40.8112, 21.766, 148.841, -143.029, 0, 0, 0, 0, 242.706, -21.9562, 0, 0, 0, 0, -142.279, -20.5958 )
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "Новая анимация"
+length = 10.0
+loop = true
+tracks/0/type = "bezier"
+tracks/0/path = NodePath("PathFollow2D:unit_offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 3.1202, 0.655466, 0, -2.65835, 0.474326, 0.25, 0 ),
+"times": PoolRealArray( 0, 10 )
+}
+
+[sub_resource type="GDScript" id=3]
+script/source = "extends PathFollow2D
+
+
+# Declare member variables here. Examples:
+# var a = 2
+# var b = \"text\"
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	
+	pass # Replace with function body.
+
+var t = 0
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	t = wrapf(t+delta*0.1,0,1)
+	unit_offset = t
+	pass
+"
+
+[node name="Node2D" type="Node2D"]
+position = Vector2( 403.634, 224.481 )
+
+[node name="Path2D2" type="Path2D" parent="."]
+self_modulate = Color( 0.501961, 0.6, 1, 1 )
+position = Vector2( -43.989, 158.311 )
+curve = SubResource( 1 )
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D2"]
+position = Vector2( -142.279, -20.5958 )
+rotation = 3.13806
+rotate = false
+cubic_interp = false
+loop = false
+
+[node name="ColorRect4" type="ColorRect" parent="Path2D2/PathFollow2D"]
+margin_right = 40.0
+margin_bottom = 40.0
+rect_pivot_offset = Vector2( 18.6731, 21.3734 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Path2D2"]
+autoplay = "Новая анимация"
+"anims/Новая анимация" = SubResource( 2 )
+
+[node name="Path2D3" type="Path2D" parent="."]
+self_modulate = Color( 0.501961, 0.6, 1, 1 )
+position = Vector2( -45.659, 13.0048 )
+curve = SubResource( 1 )
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D3"]
+position = Vector2( -142.279, -20.5958 )
+rotation = 3.13806
+rotate = false
+cubic_interp = false
+loop = false
+script = SubResource( 3 )
+
+[node name="ColorRect4" type="ColorRect" parent="Path2D3/PathFollow2D"]
+margin_right = 40.0
+margin_bottom = 40.0
+rect_pivot_offset = Vector2( 18.6731, 21.3734 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
