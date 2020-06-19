@@ -9,13 +9,16 @@ extends Node2D
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
+	get_tree().set_auto_accept_quit(false)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
 
-
+func _notification(what):
+	if what == MainLoop.NOTIFICATION_WM_GO_BACK_REQUEST:
+		$Node2D/ParallaxBackground/ColorRect2.color = Color(1,1,1)
 
 func _on_ColorRect4_mouse_entered():
 	print("Hide")

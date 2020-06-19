@@ -46,17 +46,17 @@ func _process(delta):
 
 func _on_VisibilityNotifier2D_screen_exited():
 	pass # Replace with function body.
-	$"../ColorRect2/Tween".interpolate_property($"../ColorRect2","color",$"../ColorRect2".color,colorOff,0.5,
+	$"../ParallaxBackground/ColorRect2/Tween".interpolate_property($"../ParallaxBackground/ColorRect2","color",$"../ParallaxBackground/ColorRect2".color,colorOff,0.5,
 				Tween.TRANS_CUBIC,Tween.EASE_IN_OUT)
-	$"../ColorRect2/Tween".start()
+	$"../ParallaxBackground/ColorRect2/Tween".start()
 
 
 func _on_VisibilityNotifier2D_screen_entered():
 	pass # Replace with function body.
 	
-	$"../ColorRect2/Tween".interpolate_property($"../ColorRect2","color",$"../ColorRect2".color,colorOn,0.5,
+	$"../ParallaxBackground/ColorRect2/Tween".interpolate_property($"../ParallaxBackground/ColorRect2","color",$"../ParallaxBackground/ColorRect2".color,colorOn,0.5,
 				Tween.TRANS_CUBIC,Tween.EASE_IN_OUT)
-	$"../ColorRect2/Tween".start()
+	$"../ParallaxBackground/ColorRect2/Tween".start()
 
 
 func _on_Area2D_area_entered(area):

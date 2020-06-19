@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Player.gd" type="Script" id=1]
 [ext_resource path="res://Main.tres" type="Shader" id=2]
@@ -6,10 +6,41 @@
 [ext_resource path="res://guitarix Test 100620201.ogg" type="AudioStream" id=4]
 [ext_resource path="res://skeleton.tscn" type="PackedScene" id=5]
 
-[sub_resource type="RectangleShape2D" id=1]
+[sub_resource type="GDScript" id=1]
+script/source = "extends CanvasLayer
+
+
+# Declare member variables here. Examples:
+# var a = 2
+# var b = \"text\"
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+#	ResourceLoader.load_interactive(\"\")
+#	set_process(true)
+#	var f = File.new()
+#	f.open(\"user://save.d\",File.READ)
+#	f.store_var(self)
+#	for i in get_children():
+#		f.store_var(i)
+#	for i in get_child_count():
+#		i = f.get_var()
+#		add_child(i)
+	
+#	f.close()
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+#func _process(delta):
+#	pass
+"
+
+[sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 32.551, 31.9382 )
 
-[sub_resource type="GDScript" id=2]
+[sub_resource type="GDScript" id=3]
 script/source = "extends Light2D
 
 
@@ -31,19 +62,19 @@ func _process(delta):
 
 "
 
-[sub_resource type="Curve" id=3]
+[sub_resource type="Curve" id=4]
 _data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.29249, 0.388636 ), 0.0, 0.0, 0, 0, Vector2( 0.509881, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.758893, 0.506818 ), 0.0, 0.0, 0, 0, Vector2( 0.992095, 1 ), 0.0, 0.0, 0, 0 ]
 
-[sub_resource type="ShaderMaterial" id=4]
+[sub_resource type="ShaderMaterial" id=5]
 shader = ExtResource( 2 )
 
-[sub_resource type="RectangleShape2D" id=5]
+[sub_resource type="RectangleShape2D" id=6]
 extents = Vector2( 155.125, 126.909 )
 
-[sub_resource type="OccluderPolygon2D" id=6]
+[sub_resource type="OccluderPolygon2D" id=7]
 polygon = PoolVector2Array( 2.70642, -2.11368, 3.87277, 257.983, 316.455, 257.983, 314.122, -3.28003 )
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=8]
 length = 5.0
 tracks/0/type = "value"
 tracks/0/path = NodePath("ColorRect4:rect_position")
@@ -58,21 +89,36 @@ tracks/0/keys = {
 "values": [ Vector2( 462, 277 ), Vector2( 110.617, 286.761 ), Vector2( 276.141, 41.2195 ), Vector2( 646.051, 59.9952 ), Vector2( 218.441, 312.217 ) ]
 }
 
-[sub_resource type="Animation" id=8]
-resource_name = "Новая анимация (2)"
+[sub_resource type="Animation" id=9]
 
 [node name="Node2D" type="CanvasLayer"]
 layer = 0
+script = SubResource( 1 )
 
-[node name="ColorRect2" type="ColorRect" parent="."]
+[node name="ColorRect3" type="ColorRect" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
+color = Color( 1, 1, 1, 0 )
 __meta__ = {
 "_edit_lock_": true,
 "_edit_use_anchors_": false
 }
 
-[node name="Tween" type="Tween" parent="ColorRect2"]
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="ColorRect2" type="ColorRect" parent="ParallaxBackground"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -512.0
+margin_top = -300.0
+margin_right = 512.0
+margin_bottom = 300.0
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Tween" type="Tween" parent="ParallaxBackground/ColorRect2"]
 
 [node name="ColorRect" type="ColorRect" parent="."]
 margin_left = -14.1013
@@ -86,6 +132,7 @@ __meta__ = {
 
 [node name="Player" type="Sprite" parent="."]
 position = Vector2( 510.202, 143.396 )
+z_index = 1
 texture = ExtResource( 3 )
 script = ExtResource( 1 )
 __meta__ = {
@@ -103,7 +150,7 @@ scale = Vector2( 3.01183, 3.05052 )
 [node name="Area2D" type="Area2D" parent="Player"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player/Area2D"]
-shape = SubResource( 1 )
+shape = SubResource( 2 )
 
 [node name="Light2D" type="Light2D" parent="Player"]
 position = Vector2( -1.85651, 3.67154 )
@@ -114,7 +161,7 @@ mode = 2
 shadow_enabled = true
 shadow_color = Color( 0, 0, 0, 0.827451 )
 shadow_buffer_size = 4096
-script = SubResource( 2 )
+script = SubResource( 3 )
 
 [node name="Particles2D" type="CPUParticles2D" parent="Player"]
 light_mask = 0
@@ -136,7 +183,7 @@ linear_accel = 100.0
 linear_accel_random = 1.0
 scale_amount = 5.0
 scale_amount_random = 1.0
-scale_amount_curve = SubResource( 3 )
+scale_amount_curve = SubResource( 4 )
 hue_variation = 1.0
 hue_variation_random = 1.0
 
@@ -145,8 +192,11 @@ stream = ExtResource( 4 )
 volume_db = -30.0
 autoplay = true
 
+[node name="Camera2D" type="Camera2D" parent="Player"]
+current = true
+
 [node name="ColorRect4" type="ColorRect" parent="."]
-material = SubResource( 4 )
+material = SubResource( 5 )
 margin_left = 462.0
 margin_top = 277.0
 margin_right = 774.0
@@ -163,19 +213,19 @@ audio_bus_name = "New Bus1"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ColorRect4/Area2D"]
 position = Vector2( 156.275, 128.606 )
-shape = SubResource( 5 )
+shape = SubResource( 6 )
 __meta__ = {
 "_edit_lock_": true
 }
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="ColorRect4"]
 position = Vector2( -3.70117, 0 )
-occluder = SubResource( 6 )
+occluder = SubResource( 7 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "Новая анимация"
-"anims/Новая анимация" = SubResource( 7 )
-"anims/Новая анимация (2)" = SubResource( 8 )
+"anims/Новая анимация" = SubResource( 8 )
+"anims/Новая анимация (2)" = SubResource( 9 )
 
 [node name="skeleton" parent="." instance=ExtResource( 5 )]
 position = Vector2( 674.698, 266.858 )

@@ -2,7 +2,7 @@
 
 [ext_resource path="res://icon.png" type="Texture" id=1]
 
-[sub_resource type="GDScript" id=15]
+[sub_resource type="GDScript" id=1]
 script/source = "extends Node2D
 
 
@@ -31,58 +31,58 @@ func _on_Player_updatePos(pos):
 	pass # Replace with function body.
 "
 
-[sub_resource type="AnimationNodeAdd2" id=1]
-
-[sub_resource type="AnimationNodeAnimation" id=2]
-animation = "rest"
+[sub_resource type="AnimationNodeAdd2" id=2]
 
 [sub_resource type="AnimationNodeAnimation" id=3]
-animation = "Hello"
-
-[sub_resource type="AnimationNodeBlend2" id=4]
-
-[sub_resource type="AnimationNodeAnimation" id=11]
-animation = "Hello"
-
-[sub_resource type="AnimationNodeAnimation" id=12]
-animation = "help"
-
-[sub_resource type="AnimationNodeAnimation" id=13]
 animation = "rest"
 
-[sub_resource type="AnimationNodeBlendSpace2D" id=14]
-blend_point_0/node = SubResource( 11 )
-blend_point_0/pos = Vector2( 0, 0.7 )
-blend_point_1/node = SubResource( 12 )
-blend_point_1/pos = Vector2( 0.5, -0.7 )
-blend_point_2/node = SubResource( 13 )
-blend_point_2/pos = Vector2( -0.5, -0.7 )
+[sub_resource type="AnimationNodeAnimation" id=4]
+animation = "Hello"
 
-[sub_resource type="AnimationNodeTimeScale" id=5]
+[sub_resource type="AnimationNodeBlend2" id=5]
 
 [sub_resource type="AnimationNodeAnimation" id=6]
 animation = "Hello"
 
-[sub_resource type="AnimationNodeBlendTree" id=7]
+[sub_resource type="AnimationNodeAnimation" id=7]
+animation = "help"
+
+[sub_resource type="AnimationNodeAnimation" id=8]
+animation = "rest"
+
+[sub_resource type="AnimationNodeBlendSpace2D" id=9]
+blend_point_0/node = SubResource( 6 )
+blend_point_0/pos = Vector2( 0, 0.7 )
+blend_point_1/node = SubResource( 7 )
+blend_point_1/pos = Vector2( 0.5, -0.7 )
+blend_point_2/node = SubResource( 8 )
+blend_point_2/pos = Vector2( -0.5, -0.7 )
+
+[sub_resource type="AnimationNodeTimeScale" id=10]
+
+[sub_resource type="AnimationNodeAnimation" id=11]
+animation = "Hello"
+
+[sub_resource type="AnimationNodeBlendTree" id=12]
 graph_offset = Vector2( -6.76389, 147.389 )
-nodes/Add2/node = SubResource( 1 )
+nodes/Add2/node = SubResource( 2 )
 nodes/Add2/position = Vector2( 40, 120 )
-nodes/Animation/node = SubResource( 3 )
+nodes/Animation/node = SubResource( 4 )
 nodes/Animation/position = Vector2( -280, 240 )
-"nodes/Animation 2/node" = SubResource( 2 )
+"nodes/Animation 2/node" = SubResource( 3 )
 "nodes/Animation 2/position" = Vector2( 120, 300 )
-nodes/Blend2/node = SubResource( 4 )
+nodes/Blend2/node = SubResource( 5 )
 nodes/Blend2/position = Vector2( 340, 200 )
-nodes/BlendSpace2D/node = SubResource( 14 )
+nodes/BlendSpace2D/node = SubResource( 9 )
 nodes/BlendSpace2D/position = Vector2( 420, 480 )
-nodes/TimeScale/node = SubResource( 5 )
+nodes/TimeScale/node = SubResource( 10 )
 nodes/TimeScale/position = Vector2( -120, 220 )
 nodes/output/position = Vector2( 740, 480 )
-nodes/rest/node = SubResource( 6 )
+nodes/rest/node = SubResource( 11 )
 nodes/rest/position = Vector2( -200, 120 )
-node_connections = [ "output", 0, "BlendSpace2D", "TimeScale", 0, "Animation", "Add2", 0, "rest", "Add2", 1, "TimeScale", "Blend2", 0, "Add2", "Blend2", 1, "Animation 2" ]
+node_connections = [ "output", 0, "BlendSpace2D", "Add2", 0, "rest", "Add2", 1, "TimeScale", "Blend2", 0, "Add2", "Blend2", 1, "Animation 2", "TimeScale", 0, "Animation" ]
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=13]
 length = 3.0
 loop = true
 tracks/0/type = "value"
@@ -146,8 +146,7 @@ tracks/4/keys = {
 "values": [ -104.334 ]
 }
 
-[sub_resource type="Animation" id=9]
-resource_name = "help"
+[sub_resource type="Animation" id=14]
 length = 2.0
 loop = true
 tracks/0/type = "value"
@@ -211,8 +210,7 @@ tracks/4/keys = {
 "values": [ 0.0 ]
 }
 
-[sub_resource type="Animation" id=10]
-resource_name = "rest"
+[sub_resource type="Animation" id=15]
 length = 3.0
 loop = true
 tracks/0/type = "value"
@@ -277,7 +275,7 @@ tracks/4/keys = {
 }
 
 [node name="skeleton" type="Node2D"]
-script = SubResource( 15 )
+script = SubResource( 1 )
 
 [node name="PolyGons" type="Node2D" parent="."]
 
@@ -331,28 +329,28 @@ rest = Transform2D( 1, 0, 0, 1, 0.540359, -25.3969 )
 
 [node name="Bone2D2" type="Bone2D" parent="Skeleton2D/Bone2D"]
 position = Vector2( 31.8005, -22.2355 )
-rotation = -0.360977
+rotation = -0.23928
 rest = Transform2D( 1, 0, 0, 1, 30.8005, -23.2355 )
 
 [node name="Bone2D3" type="Bone2D" parent="Skeleton2D/Bone2D/Bone2D2"]
 position = Vector2( 43.2288, -41.6077 )
-rotation = -0.731136
+rotation = -0.731
 rest = Transform2D( 0.868441, -0.495792, 0.495792, 0.868441, 43.2288, -41.6077 )
 default_length = 46.0
 
 [node name="Bone2D3" type="Bone2D" parent="Skeleton2D/Bone2D"]
 position = Vector2( -19.9933, -29.1794 )
-rotation = 0.244685
+rotation = 0.204916
 rest = Transform2D( 1, 0, 0, 1, -19.9933, -29.1794 )
 
 [node name="Bone2D3" type="Bone2D" parent="Skeleton2D/Bone2D/Bone2D3"]
 position = Vector2( -31.8812, -27.5583 )
-rotation = -2.11506
+rotation = -2.11507
 rest = Transform2D( -0.647565, -0.76201, 0.76201, -0.647565, -31.8812, -27.5583 )
 default_length = 45.0
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
-tree_root = SubResource( 7 )
+tree_root = SubResource( 12 )
 anim_player = NodePath("rest")
 active = true
 parameters/Add2/add_amount = 0.5
@@ -361,6 +359,6 @@ parameters/BlendSpace2D/blend_position = Vector2( 0.53125, -0.594828 )
 parameters/TimeScale/scale = 4.24
 
 [node name="rest" type="AnimationPlayer" parent="AnimationTree"]
-anims/Hello = SubResource( 8 )
-anims/help = SubResource( 9 )
-anims/rest = SubResource( 10 )
+anims/Hello = SubResource( 13 )
+anims/help = SubResource( 14 )
+anims/rest = SubResource( 15 )
